@@ -1,0 +1,62 @@
+[
+  {
+    "id": "req-001",
+    "title": "분실 반려묘 수색",
+    "description": "골목길에서 사라진 고양이를 찾아주세요.",
+    "grade": "normal",
+    "requiredStats": { "physical": 8, "social": 6 },
+    "tags": ["신체"],
+    "reward": 12000,
+    "difficulty": 1
+  },
+  {
+    "id": "req-002",
+    "title": "임대 계약 분쟁 조율",
+    "description": "건물주와 세입자 사이 입장을 조율해야 합니다.",
+    "grade": "rare",
+    "requiredStats": { "speech": 10, "social": 8 },
+    "tags": ["협상"],
+    "reward": 18000,
+    "difficulty": 2
+  },
+  {
+    "id": "req-003",
+    "title": "기업 오리엔테이션 기획",
+    "description": "신입사원 워크숍 프로그램을 짜야 합니다.",
+    "grade": "special",
+    "requiredStats": { "creativity": 11, "charm": 9 },
+    "tags": ["기획", "VIP"],
+    "reward": 25000,
+    "difficulty": 3
+  },
+  {
+    "id": "req-004",
+    "title": "VIP 행사 동선 경호",
+    "description": "중요 인사 방문 행사의 현장 통제가 필요합니다.",
+    "grade": "important",
+    "requiredStats": { "physical": 12, "mental": 10, "charm": 8 },
+    "tags": ["신체", "VIP", "멘탈"],
+    "reward": 35000,
+    "difficulty": 4
+  },
+  {
+    "id": "req-005",
+    "title": "SNS 악성 댓글 대응",
+    "description": "홍보 사고 후 여론 수습이 급합니다.",
+    "grade": "rare",
+    "requiredStats": { "speech": 9, "creativity": 8, "mental": 8 },
+    "tags": ["협상", "기획"],
+    "reward": 20000,
+    "difficulty": 2
+  },
+  {
+    "id": "req-006",
+    "title": "창고 야간 순찰",
+    "description": "도난 의심 신고에 대한 야간 점검이 필요합니다.",
+    "grade": "normal",
+    "requiredStats": { "physical": 9, "mental": 7 },
+    "tags": ["신체", "야간"],
+    "reward": 14000,
+    "difficulty": 1
+  }
+]

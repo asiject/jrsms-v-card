@@ -1,0 +1,7 @@
+{
+  "startingMoney": 50000,
+  "monthlyRent": 8000,
+  "monthlySalaryPerStaff": 5000,
+  "monthlyUtilities": 2000,
+  "requestPoolSize": 4
+}
