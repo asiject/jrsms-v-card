@@ -19,8 +19,19 @@ export const StatusBar = ({
   return (
     <header className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-700 bg-slate-900/80 p-4">
       <div>
-        <p className="text-xs uppercase tracking-wide text-slate-400">열혈 사무소 MVP</p>
-        <h1 className="text-lg font-bold text-slate-50">{getTurnWeekLabel(state.turn)}</h1>
+        <p className="text-xs uppercase tracking-wide text-slate-400">
+          {state.officeName}
+          {state.tutorial.isActive && (
+            <span className="ml-2 rounded bg-violet-800 px-1.5 py-0.5 text-violet-100">
+              튜토리얼
+            </span>
+          )}
+        </p>
+        <h1 className="text-lg font-bold text-slate-50">
+          {state.tutorial.isActive
+            ? `튜토리얼 ${state.tutorial.tutorialTurn}주차`
+            : getTurnWeekLabel(state.turn)}
+        </h1>
         <p className="text-sm text-slate-300">
           자금 {formatMoney(state.money)} · 사무소 Lv.{state.officeLevel} ·{' '}
           {state.playthrough}회차
@@ -41,7 +52,8 @@ export const StatusBar = ({
         )}
         <button
           type="button"
-          className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-500"
+          className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-50"
+          disabled={state.tutorial.phase === 'intro'}
           onClick={onAdvanceTurn}
         >
           턴 종료
