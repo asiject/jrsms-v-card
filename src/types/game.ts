@@ -16,6 +16,28 @@ export type ScheduleType = 'wait' | 'work' | 'rest' | 'growth';
 
 export type LogCategory = 'request' | 'economy' | 'staff' | 'system';
 
+export type TutorialPhase =
+  | 'intro'
+  | 'playing'
+  | 'event'
+  | 'goal_setup'
+  | 'complete';
+
+export interface TutorialState {
+  isActive: boolean;
+  completed: boolean;
+  phase: TutorialPhase;
+  /** 현재 튜토리얼 주차 (1~4) */
+  tutorialTurn: number;
+  eventChoiceId: string | null;
+}
+
+export interface GoalState {
+  longTermQuarterLabel: string;
+  shortTermGoalId: string;
+  shortTermGoalLabel: string;
+}
+
 export interface Manager {
   stats: Stats;
 }
@@ -90,6 +112,7 @@ export interface GameState {
   turn: number;
   money: number;
   officeLevel: number;
+  officeName: string;
   arrearsMonths: number;
   manager: Manager;
   staff: Staff[];
@@ -98,6 +121,8 @@ export interface GameState {
   turnLogs: TurnLog[];
   settings: GameSettings;
   lastSummary: string | null;
+  tutorial: TutorialState;
+  goals: GoalState | null;
 }
 
 export interface TurnAdvanceSuccess {

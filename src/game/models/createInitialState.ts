@@ -1,21 +1,33 @@
 import { economyBalance, initialStaffRoster, requestTemplates } from '@/game/data/loadBalance';
+import { OFFICE_NAME } from '@/game/data/tutorialContent';
+import { SCHEMA_VERSION } from '@/game/constants';
+import { createTutorialState } from '@/game/models/createTutorialState';
 import type {
   GameSettings,
   GameState,
   RequestInstance,
   StaffAssignment,
+  TutorialState,
 } from '@/types/game';
-import { SCHEMA_VERSION } from '@/game/constants';
 
 const DEFAULT_SETTINGS: GameSettings = {
   inputMode: 'select',
   narrativeSpeed: 'sequential',
 };
 
+const COMPLETED_TUTORIAL: TutorialState = {
+  isActive: false,
+  completed: true,
+  phase: 'complete',
+  tutorialTurn: 4,
+  eventChoiceId: null,
+};
+
 const createInstanceId = (templateId: string, turn: number, index: number): string => {
   return `${templateId}-t${turn}-${index}`;
 };
 
+/** 의뢰 풀을 목표 수만큼 채움 */
 export const fillRequestPool = (
   current: RequestInstance[],
   targetSize: number,
@@ -50,12 +62,25 @@ const createDefaultAssignments = (staffIds: string[]): StaffAssignment[] => {
   }));
 };
 
-export const createInitialState = (playthrough = 1): GameState => {
-  const staff = initialStaffRoster.map((member) => ({
-    ...member,
-    stats: { ...member.stats },
-    tags: [...member.tags],
-  }));
+/** 본편 초기 상태 (튜토리얼 완료 후) */
+export const createMainGameState = (playthrough = 1, carry?: Partial<GameState>): GameState => {
+  const staff = initialStaffRoster.map((member) => {
+    const carried = carry?.staff?.find((item) => item.id === member.id);
+
+    if (carried !== undefined) {
+      return {
+        ...carried,
+        stats: { ...carried.stats },
+        tags: [...carried.tags],
+      };
+    }
+
+    return {
+      ...member,
+      stats: { ...member.stats },
+      tags: [...member.tags],
+    };
+  });
 
   const requests = fillRequestPool([], economyBalance.requestPoolSize, 1);
 
@@ -63,10 +88,11 @@ export const createInitialState = (playthrough = 1): GameState => {
     schemaVersion: SCHEMA_VERSION,
     playthrough,
     turn: 1,
-    money: economyBalance.startingMoney,
-    officeLevel: 1,
-    arrearsMonths: 0,
-    manager: {
+    money: carry?.money ?? economyBalance.startingMoney,
+    officeLevel: carry?.officeLevel ?? 1,
+    officeName: OFFICE_NAME,
+    arrearsMonths: carry?.arrearsMonths ?? 0,
+    manager: carry?.manager ?? {
       stats: {
         physical: 8,
         speech: 10,
@@ -79,11 +105,21 @@ export const createInitialState = (playthrough = 1): GameState => {
     staff,
     requests,
     assignments: createDefaultAssignments(staff.map((member) => member.id)),
-    turnLogs: [],
-    settings: {
+    turnLogs: carry?.turnLogs ?? [],
+    settings: carry?.settings ?? {
       ...DEFAULT_SETTINGS,
       narrativeSpeed: playthrough >= 2 ? 'instant' : 'sequential',
     },
     lastSummary: null,
+    tutorial: COMPLETED_TUTORIAL,
+    goals: carry?.goals ?? null,
   };
+};
+
+export const createInitialState = (playthrough = 1): GameState => {
+  if (playthrough >= 2) {
+    return createMainGameState(playthrough);
+  }
+
+  return createTutorialState(playthrough);
 };

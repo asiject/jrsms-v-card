@@ -1,4 +1,5 @@
 import { economyBalance } from '@/game/data/loadBalance';
+import { advanceTutorialTurn } from '@/game/engine/advanceTutorialTurn';
 import { fillRequestPool } from '@/game/models/createInitialState';
 import {
   applyGrowthEffect,
@@ -71,6 +72,10 @@ const validateAssignments = (assignments: StaffAssignment[]): string | null => {
 };
 
 export const advanceTurn = (state: GameState): TurnAdvanceResult => {
+  if (state.tutorial.isActive && state.tutorial.phase === 'playing') {
+    return advanceTutorialTurn(state);
+  }
+
   const validationError = validateAssignments(state.assignments);
 
   if (validationError !== null) {
