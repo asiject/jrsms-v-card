@@ -1,0 +1,32 @@
+[
+  {
+    "id": "staff-001",
+    "name": "한지우",
+    "role": "현장 요원",
+    "disposition": "행동파",
+    "tags": ["신체", "야간"],
+    "stats": {
+      "physical": 14,
+      "speech": 8,
+      "creativity": 7,
+      "charm": 9,
+      "social": 10,
+      "mental": 11
+    }
+  },
+  {
+    "id": "staff-002",
+    "name": "서민재",
+    "role": "상담 담당",
+    "disposition": "협상가",
+    "tags": ["협상", "네트워크"],
+    "stats": {
+      "physical": 7,
+      "speech": 15,
+      "creativity": 10,
+      "charm": 12,
+      "social": 14,
+      "mental": 9
+    }
+  }
+]
